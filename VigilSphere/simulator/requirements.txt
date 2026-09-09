@@ -1,0 +1,3 @@
+faker
+supabase
+python-dotenv
