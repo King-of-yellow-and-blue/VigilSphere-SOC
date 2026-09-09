@@ -1,72 +1,66 @@
-🛡️ VigilSphere
-Autonomous SOAR & Predictive 3D Security Operations Center
+# 🛡️ VigilSphere
+**Autonomous SOAR & Predictive 3D Security Operations Center**
 
-VigilSphere is a next-generation cybersecurity dashboard that shifts Security Operations from reactive alerting to autonomous containment. Built for the modern enterprise, it replaces flat 2D log streams with a fully interactive 3D spatial environment, real-time threat ingestion, and an autonomous SOAR (Security Orchestration, Automation, and Response) engine.
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![Gemini](https://img.shields.io/badge/Gemini-8E75B2?style=for-the-badge&logo=googlebard&logoColor=white)
 
-Team: 4am_Decryptors
+VigilSphere shifts Security Operations from reactive alerting to autonomous containment. Built for the modern enterprise, it replaces flat 2D log streams with a fully interactive 3D spatial environment, real-time threat ingestion, and an autonomous SOAR engine.
 
-Track: Cybersecurity (CS-04)
+**Team:** 4am_Decryptors | **Track:** Cybersecurity (CS-04)
 
-🚀 Core Features
-Autonomous SOAR Engine: VigilSphere doesn't wait for a human. When a critical anomaly (e.g., Brute Force, Port Scan) is detected, the Python engine autonomously applies containment protocols (Lock Account, Block IP) in milliseconds and logs the audit trail for human review.
+---
 
-Spatial Blast-Radius Topology: Live SVG topology mapping visually highlights affected system nodes (Network, File System, User Accounts), allowing analysts to see exactly what part of the infrastructure is compromised at a glance.
+## 🚀 Core Features
 
-Predictive Kill-Chain Forecasting: Integrated with the Google Gemini LLM to translate raw log evidence into plain-English incident reports and forecast the attacker's next lateral movement.
+* **Autonomous SOAR Engine:** Detects critical anomalies (Brute Force, Port Scan) and autonomously applies containment protocols (Lock Account, Block IP) in milliseconds, leaving a clean audit trail.
+* **Spatial Blast-Radius Topology:** Live SVG mapping highlights affected system nodes (Network, File System, User Accounts) to instantly visualize the compromised perimeter.
+* **Predictive Kill-Chain Forecasting:** Uses the Google Gemini LLM to translate raw log evidence into incident reports and forecast the attacker's next lateral movement.
+* **Multi-Vector Ingestion Simulator:** A concurrent Python engine streaming simulated Linux `auth.log`, Windows Event Logs, Apache, and Syslogs directly into the database.
+* **Real-Time Sync & RBAC:** Supabase WebSockets drive instant UI updates, secured by Supabase Auth to ensure only Tier-3 SOC Admins can access configurations.
 
-Multi-Vector Ingestion Simulator: A concurrent Python threading engine that streams simulated enterprise logs (Linux auth.log, Windows Event Logs, Apache, and Syslog) directly into the database.
+---
 
-Real-Time Sync & RBAC: Powered by Supabase WebSockets for instant UI updates and secured by Supabase Auth to ensure only Tier-3 SOC Admins can access critical configurations.
+## 🛠️ Tech Stack
 
-🛠️ Tech Stack
-Frontend (Interface & Routing)
+| Domain | Technologies |
+| :--- | :--- |
+| **Frontend** | Next.js (App Router), Tailwind CSS, Spline 3D, Lucide React |
+| **Backend** | Supabase (PostgreSQL, Auth, Real-time WebSockets) |
+| **Intelligence** | Google Gemini API (LLM Investigation) |
+| **Log Engine** | Python 3, `supabase-py`, `Faker` |
 
-Next.js (App Router)
+---
 
-Tailwind CSS (Dark Glassmorphism UI)
+## ⚙️ Local Development Setup
 
-Spline 3D (Spatial visual rendering)
+VigilSphere uses a decoupled architecture. You must run the frontend and the log simulator simultaneously in two separate terminals.
 
-Lucide React (Iconography)
+### 1. Environment Variables
+Create `.env.local` (Next.js root) and `.env` (`simulator/` folder) with your Supabase credentials:
 
-Backend (Data & Auth)
-
-Supabase PostgreSQL (Real-time database)
-
-Supabase Auth (Client-side session protection)
-
-Google Gemini API (AI Investigator)
-
-Log Ingestion Engine
-
-Python 3
-
-supabase-py & Faker (Multi-thread log simulation)
-
-⚙️ Local Development Setup
-VigilSphere runs on a decoupled architecture requiring two separate environments to run simultaneously.
-
-1. Environment Variables
-Create a .env.local file in the Next.js root and a .env file in the simulator/ directory. Both require your Supabase credentials:
-
-Code snippet
+```env
+# Next.js Root (.env.local)
 NEXT_PUBLIC_SUPABASE_URL=your_project_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
 
-# For the Python Engine (.env)
+# Python Engine (simulator/.env)
 SUPABASE_URL=your_project_url
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
-2. Boot the Next.js Frontend (Terminal 1)
-Bash
+```
+
+### 2. Boot the Next.js Frontend (Terminal 1)
+```bash
 npm install
 npm run dev
-Navigate to http://localhost:3000. You will be intercepted by the Supabase Auth login screen.
+```
+*Navigate to `http://localhost:3000` to hit the Supabase Auth login screen.*
 
-3. Boot the SOAR Simulator (Terminal 2)
-Open a separate terminal to run the continuous log-generation engine.
-
-Bash
+### 3. Boot the SOAR Simulator (Terminal 2)
+```bash
 cd simulator
 pip install supabase faker python-dotenv
 python log_engine.py
-The engine will stream normal logs every 2 seconds and inject a targeted MITRE ATT&CK burst every 30 seconds.
+```
+*The engine streams normal logs every 2 seconds and injects a targeted MITRE ATT&CK burst every 30 seconds.*
